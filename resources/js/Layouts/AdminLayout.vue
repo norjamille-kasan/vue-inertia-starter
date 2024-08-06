@@ -18,7 +18,7 @@ import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/Components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/Components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -43,7 +43,7 @@ const mode = useColorMode({
     <div
         class="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]"
     >
-        <div class="hidden border-r bg-muted/40 md:block">
+        <div class="hidden border-r bg-muted/40 md:block sticky top-0 h-screen">
             <div class="flex h-full max-h-screen flex-col gap-2">
                 <!-- border-b -->
                 <div class="flex h-14 items-center px-4 lg:h-[60px] lg:px-6">
@@ -107,7 +107,7 @@ const mode = useColorMode({
                                     </span>
                                 </span>
                             </span>
-                            <ChevronUpIcon class="h-4 w-4" />
+                            <ChevronUpIcon class="h-4 w-4 ml-auto" />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent class="w-64">
                             <DropdownMenuItem>
@@ -115,7 +115,7 @@ const mode = useColorMode({
                                 <ArrowRight class="h-4 w-4 ml-auto" />
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>
+                            <DropdownMenuItem @click="router.visit('/profile')">
                                 <UserCircle class="h-4 w-4 mr-2" />
                                 Profile
                             </DropdownMenuItem>
@@ -244,7 +244,9 @@ const mode = useColorMode({
                                         <ArrowRight class="h-4 w-4 ml-auto" />
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem>
+                                    <DropdownMenuItem
+                                        @click="router.visit('/profile')"
+                                    >
                                         <UserCircle class="h-4 w-4 mr-2" />
                                         Profile
                                     </DropdownMenuItem>
