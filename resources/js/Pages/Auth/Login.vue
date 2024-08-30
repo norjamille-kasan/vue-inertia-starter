@@ -46,63 +46,56 @@ const submit = () => {
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
-        <Card class="mx-auto">
-            <CardHeader>
-                <CardTitle class="text-2xl"> Login </CardTitle>
-                <CardDescription>
-                    Enter your email below to login to your account
-                </CardDescription>
-            </CardHeader>
-            <CardContent>
-                <form @submit.prevent="submit" class="grid gap-3">
-                    <div>
-                        <Label for="email">Email</Label>
+        <div class="mb-3">
+            <h1 class="text-2xl font-bold">Sign in</h1>
+            <p class="text-muted-foreground text-sm">
+                Enter your email below to login to your account
+            </p>
+        </div>
+        <form @submit.prevent="submit" class="grid gap-2">
+            <div>
+                <Label for="email">Email</Label>
 
-                        <Input
-                            id="email"
-                            type="email"
-                            class="mt-1 block w-full"
-                            v-model="form.email"
-                            required
-                            autofocus
-                            autocomplete="username"
-                        />
+                <Input
+                    id="email"
+                    type="email"
+                    class="mt-1 block w-full"
+                    v-model="form.email"
+                    required
+                    autofocus
+                    autocomplete="username"
+                />
 
-                        <InputError class="mt-2" :message="form.errors.email" />
-                    </div>
+                <InputError class="mt-2" :message="form.errors.email" />
+            </div>
 
-                    <div>
-                        <Label for="password">Password</Label>
+            <div>
+                <Label for="password">Password</Label>
 
-                        <Input
-                            id="password"
-                            type="password"
-                            class="mt-1 block w-full"
-                            v-model="form.password"
-                            required
-                            autocomplete="current-password"
-                        />
+                <Input
+                    id="password"
+                    type="password"
+                    class="mt-1 block w-full"
+                    v-model="form.password"
+                    required
+                    autocomplete="current-password"
+                />
 
-                        <InputError
-                            class="mt-2"
-                            :message="form.errors.password"
-                        />
-                    </div>
-                    <div class="w-full pt-3">
-                        <Button class="w-full" :disabled="form.processing">
-                            <Loader
-                                class="h-4 w-4 mr-1 animate-spin"
-                                v-if="form.processing"
-                            />
-                            Sign in
-                        </Button>
-                    </div>
-                </form>
-                <div class="mt-4 text-center text-sm">
-                    Don't have an account?
-                    <Link href="/register" class="underline"> Sign up </Link>
-                </div>
-            </CardContent>
-        </Card>
+                <InputError class="mt-2" :message="form.errors.password" />
+            </div>
+            <div class="w-full pt-3">
+                <Button class="w-full" :disabled="form.processing">
+                    <Loader
+                        class="h-4 w-4 mr-1 animate-spin"
+                        v-if="form.processing"
+                    />
+                    Sign in
+                </Button>
+            </div>
+        </form>
+        <div class="mt-4 text-center text-sm">
+            Don't have an account?
+            <Link href="/register" class="underline"> Sign up </Link>
+        </div>
     </GuestLayout>
 </template>

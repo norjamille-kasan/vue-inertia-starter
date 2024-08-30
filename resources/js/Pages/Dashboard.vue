@@ -7,12 +7,13 @@ import { Head } from "@inertiajs/vue3";
     <Head title="Dashboard" />
     <AdminLayout>
         <template #title>
-            <h1 class="text-xl font-semibold">Dashboard</h1>
+            <h1 class="text-2xl font-semibold">Dashboard</h1>
+            <p class="text-sm text-muted-foreground">
+                Welcome to your dashboard, {{ $page.props.auth.user.name }}
+            </p>
         </template>
         <div>
-            <h1 class="text-lg font-semibold">
-                Welcome to your dashboard, {{ $page.props.auth.user.name }}
-            </h1>
+            <h1 class="text-lg font-semibold"></h1>
         </div>
     </AdminLayout>
 </template>

@@ -2,7 +2,7 @@
 import { useColorMode } from "@vueuse/core";
 
 const mode = useColorMode({
-    initialValue: "auto",
+    initialValue: "light",
 });
 </script>
 
