@@ -2,14 +2,13 @@
 import {
     ArrowRight,
     Bell,
-    BellIcon,
     ChevronDownIcon,
     ChevronUpIcon,
+    EllipsisVerticalIcon,
     Home,
+    HomeIcon,
+    LogOutIcon,
     Menu,
-    MessageSquareIcon,
-    Package2,
-    SearchIcon,
     SunMoonIcon,
     UserCircle,
     ZapIcon,
@@ -17,7 +16,7 @@ import {
 import { Button } from "@/Components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/Components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { Link, router } from "@inertiajs/vue3";
+import { Link, router, usePage } from "@inertiajs/vue3";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -32,12 +31,21 @@ import {
 } from "@/Components/ui/dropdown-menu";
 import { Avatar, AvatarImage } from "@/Components/ui/avatar";
 import { useColorMode } from "@vueuse/core";
-import { Input } from "@/Components/ui/input";
-import { Separator } from "@/Components/ui/separator";
 
 const mode = useColorMode({
     initialValue: "auto",
 });
+
+const { url } = usePage();
+
+const NAV_LIST = [
+    {
+        label: "Dashboard",
+        url: "/dashboard",
+        isActive: url.startsWith("/dashboard"),
+        icon: HomeIcon,
+    },
+];
 </script>
 
 <template>
@@ -51,15 +59,8 @@ const mode = useColorMode({
                         <ZapIcon class="h-6 w-6" />
                         <span class="">VILT-ADMIN</span>
                     </a>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        class="ml-auto h-8 w-8"
-                    >
-                        <Bell class="h-4 w-4" />
-                        <span class="sr-only">Toggle notifications</span>
-                    </Button>
                 </div>
+
                 <div class="flex-1">
                     <nav
                         class="grid items-start px-2 text-sm font-medium lg:px-4"
@@ -80,11 +81,99 @@ const mode = useColorMode({
                         </Link>
                     </nav>
                 </div>
-                <div class="mt-auto p-4"></div>
+                <div class="mt-auto p-2 border-t">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger
+                            class="flex w-full items-center gap-3 px-3 py-2.5 text-left text-base/6 font-medium sm:py-2 sm:text-sm/5"
+                        >
+                            <span className="flex min-w-0 items-center gap-3">
+                                <Avatar class="size-10 border" circle alt="">
+                                    <AvatarImage
+                                        :src="
+                                            'https://api.dicebear.com/9.x/thumbs/svg?seed=' +
+                                            $page.props.auth.user.name
+                                        "
+                                        alt="@radix-vue"
+                                    />
+                                </Avatar>
+                                <span className="min-w-0">
+                                    <span
+                                        className="block truncate text-sm/5 font-medium  "
+                                        >{{ $page.props.auth.user.name }}</span
+                                    >
+                                    <span
+                                        className="block truncate text-xs/5 font-normal text-muted-foreground "
+                                    >
+                                        {{ $page.props.auth.user.email }}
+                                    </span>
+                                </span>
+                            </span>
+                            <EllipsisVerticalIcon class="h-4 w-4 ml-auto" />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent class="w-60">
+                            <DropdownMenuItem @click="router.visit('/profile')">
+                                <UserCircle class="h-4 w-4 mr-2" />
+                                Profile
+                            </DropdownMenuItem>
+                            <DropdownMenuSub>
+                                <DropdownMenuSubTrigger>
+                                    <SunMoonIcon class="h-4 w-4 mr-2" />
+                                    <span>Theme</span>
+                                </DropdownMenuSubTrigger>
+                                <DropdownMenuPortal>
+                                    <DropdownMenuSubContent>
+                                        <DropdownMenuItem
+                                            @click="mode = 'light'"
+                                        >
+                                            <span
+                                                :class="
+                                                    mode === 'light'
+                                                        ? 'text-muted-foreground'
+                                                        : ''
+                                                "
+                                                >Light</span
+                                            >
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                            @click="mode = 'dark'"
+                                        >
+                                            <span
+                                                :class="
+                                                    mode === 'dark'
+                                                        ? 'text-muted-foreground'
+                                                        : ''
+                                                "
+                                                >Dark</span
+                                            >
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                            @click="mode = 'auto'"
+                                        >
+                                            <span
+                                                :class="
+                                                    mode === 'auto'
+                                                        ? 'text-muted-foreground'
+                                                        : ''
+                                                "
+                                                >System</span
+                                            >
+                                        </DropdownMenuItem>
+                                    </DropdownMenuSubContent>
+                                </DropdownMenuPortal>
+                            </DropdownMenuSub>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                                @click="router.post(route('logout'))"
+                            >
+                                <LogOutIcon class="h-4 w-4 mr-2" />
+                                Sign Out
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
             </div>
         </div>
         <div class="flex flex-col">
-            <!-- border-b bg-muted/40 -->
             <header
                 class="flex h-14 items-center gap-4 px-4 lg:h-[80px] lg:px-6"
             >
@@ -254,93 +343,6 @@ const mode = useColorMode({
                             </svg>
                         </Button>
                     </div>
-                    <Separator orientation="vertical" class="h-10 mx-2" />
-                    <DropdownMenu>
-                        <DropdownMenuTrigger
-                            class="flex w-full items-center gap-3 px-2 py-2.5 text-left text-base/6 font-medium sm:py-2 sm:text-sm/5"
-                        >
-                            <span className="flex min-w-0 items-center gap-3">
-                                <Avatar class="size-10 border" circle alt="">
-                                    <AvatarImage
-                                        :src="
-                                            'https://api.dicebear.com/9.x/thumbs/svg?seed=' +
-                                            $page.props.auth.user.name
-                                        "
-                                        alt="@radix-vue"
-                                    />
-                                </Avatar>
-                                <span className="min-w-0">
-                                    <span
-                                        className="block truncate text-sm/5 font-medium  "
-                                        >{{ $page.props.auth.user.name }}</span
-                                    >
-                                    <span
-                                        className="block truncate text-xs/5 font-normal text-muted-foreground "
-                                    >
-                                        {{ $page.props.auth.user.email }}
-                                    </span>
-                                </span>
-                            </span>
-                            <ChevronDownIcon class="h-4 w-4 ml-auto" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent class="w-64">
-                            <DropdownMenuItem>
-                                Roles and Permissions
-                                <ArrowRight class="h-4 w-4 ml-auto" />
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem @click="router.visit('/profile')">
-                                <UserCircle class="h-4 w-4 mr-2" />
-                                Profile
-                            </DropdownMenuItem>
-                            <DropdownMenuSub>
-                                <DropdownMenuSubTrigger>
-                                    <SunMoonIcon class="h-4 w-4 mr-2" />
-                                    <span>Theme</span>
-                                </DropdownMenuSubTrigger>
-                                <DropdownMenuPortal>
-                                    <DropdownMenuSubContent>
-                                        <DropdownMenuItem
-                                            @click="mode = 'light'"
-                                        >
-                                            <span
-                                                :class="
-                                                    mode === 'light'
-                                                        ? 'text-muted-foreground'
-                                                        : ''
-                                                "
-                                                >Light</span
-                                            >
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem
-                                            @click="mode = 'dark'"
-                                        >
-                                            <span
-                                                :class="
-                                                    mode === 'dark'
-                                                        ? 'text-muted-foreground'
-                                                        : ''
-                                                "
-                                                >Dark</span
-                                            >
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem
-                                            @click="mode = 'auto'"
-                                        >
-                                            <span
-                                                :class="
-                                                    mode === 'auto'
-                                                        ? 'text-muted-foreground'
-                                                        : ''
-                                                "
-                                                >System</span
-                                            >
-                                        </DropdownMenuItem>
-                                    </DropdownMenuSubContent>
-                                </DropdownMenuPortal>
-                            </DropdownMenuSub>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
                 </div>
             </header>
             <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-4">
