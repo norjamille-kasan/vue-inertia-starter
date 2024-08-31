@@ -1,36 +1,8 @@
 <script setup lang="ts">
-import {
-    ArrowRight,
-    Bell,
-    ChevronDownIcon,
-    ChevronUpIcon,
-    EllipsisVerticalIcon,
-    Home,
-    HomeIcon,
-    LogOutIcon,
-    Menu,
-    SunMoonIcon,
-    UserCircle,
-    ZapIcon,
-} from "lucide-vue-next";
+import { ChartAreaIcon, Menu } from "lucide-vue-next";
 import { Button } from "@/Components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/Components/ui/sheet";
-import { cn } from "@/lib/utils";
-import { Link, router, usePage } from "@inertiajs/vue3";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuPortal,
-    DropdownMenuSeparator,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
-    DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
-import { Avatar, AvatarImage } from "@/Components/ui/avatar";
-import { useColorMode } from "@vueuse/core";
+import { usePage } from "@inertiajs/vue3";
 import SidebarLogo from "./SidebarLogo.vue";
 import SidebarNavList from "./SidebarNavList.vue";
 import SidebarNavLink from "./SidebarNavLink.vue";
@@ -43,7 +15,7 @@ const NAV_LIST = [
         label: "Dashboard",
         url: "/dashboard",
         isActive: url.startsWith("/dashboard"),
-        icon: HomeIcon,
+        icon: ChartAreaIcon,
         permission: true,
     },
 ];
@@ -86,9 +58,7 @@ const NAV_LIST = [
             </div>
         </div>
         <div class="flex flex-col">
-            <header
-                class="flex h-14 items-center gap-4 px-4 lg:h-[80px] lg:px-6"
-            >
+            <header class="flex items-end gap-4 px-4 h-14 lg:h-[80px] lg:px-8">
                 <!-- Mobile Sidebar -->
                 <Sheet>
                     <SheetTrigger as-child>
@@ -137,7 +107,7 @@ const NAV_LIST = [
                         <slot name="title"></slot>
                     </div>
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center h-full">
                     <div class="flex items-center">
                         <Button variant="ghost" size="icon">
                             <svg
@@ -174,7 +144,7 @@ const NAV_LIST = [
                     </div>
                 </div>
             </header>
-            <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-4">
+            <main class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-8">
                 <slot></slot>
             </main>
         </div>
