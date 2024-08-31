@@ -1,8 +1,8 @@
 # Laravel / Inertia JS / TailwindCSS / Shadcn-vue Starter Kit
 
-Welcome to the **StarterKit**! This is a robust starter template built with Laravel, Inertia JS, TailwindCSS, and Shadcn-vue, with TypeScript support. It's designed to help you get up and running quickly with these powerful tools.
+This is just a redesign from default laravel breeze component to shadcn-vue components. with the same functionality
 
-## 🚀 Features
+## 🚀 Stack
 
 - **Laravel**: A PHP framework for web artisans. [Learn more](https://laravel.com/)
 - **Inertia JS**: Create modern single-page apps using classic server-side routing. [Learn more](https://inertiajs.com/)
